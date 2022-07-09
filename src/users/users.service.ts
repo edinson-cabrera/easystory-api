@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { UserRole } from './user-role.enum';
 
 @Injectable()
 export class UsersService {
@@ -12,8 +13,11 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create(createUserDto);
+  create(createUserDto: CreateUserDto, role: UserRole) {
+    const user = this.userRepository.create({
+      ...createUserDto,
+      role,
+    });
     return this.userRepository.save(user);
   }
 

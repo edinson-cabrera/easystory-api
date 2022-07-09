@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { UserRole } from './user-role.enum';
+import { Public } from 'src/decorators/auth.decorator';
 
 @Controller('users')
+@ApiTags('User Controller')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Public()
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @ApiQuery({ name: 'role', enum: UserRole })
+  create(@Query('role') role: UserRole, @Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto, role);
   }
 
   @Get()

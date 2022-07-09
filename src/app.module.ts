@@ -11,6 +11,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { SubscribersModule } from './subscribers/subscribers.module';
 @Module({
   imports: [
     // Configuration Module
@@ -57,6 +58,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     UsersModule,
     BooksModule,
     AuthModule,
+    SubscribersModule,
   ],
   controllers: [AppController],
   providers: [

@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { UserRole } from '../user-role.enum';
 import * as bcrypt from 'bcrypt';
+import { Subscriber } from 'src/subscribers/entities/subscriber.entity';
 
 @Entity()
 export class User {
@@ -36,6 +37,12 @@ export class User {
     default: UserRole.USER,
   })
   role: UserRole;
+
+  @OneToMany(() => Subscriber, (subscribe) => subscribe.user_subscribe)
+  my_followers: Subscriber;
+
+  @OneToMany(() => Subscriber, (subscribe) => subscribe.user_to_subscribe)
+  following: Subscriber;
 
   @CreateDateColumn()
   createdAt: Date;
